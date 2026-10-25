@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4f4f0">
+<title>ZunFinder — Preset Finder</title>
+<style>
+:root{--paper:#f4f4f0;--ink:#111;--line:#111;--muted:#666;--white:#fff;--lime:#d7ff45}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit;text-decoration:none}.nav-wrap{position:sticky;top:12px;z-index:10;padding:0 18px;margin-top:12px}.nav{max-width:1120px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 15px;border:1.5px solid rgba(17,17,17,.18);border-radius:16px;background:rgba(255,255,255,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:4px 4px 0 #111}
+.logo{display:flex;gap:10px;align-items:center;font-weight:950;letter-spacing:-1px;font-size:19px}.logo-mark{width:30px;height:30px;background:var(--lime);border:1.5px solid #111;display:grid;place-items:center;border-radius:8px;font-weight:1000}.nav-links{display:flex;gap:22px;font-size:13px;font-weight:750}.nav-links a:hover{text-decoration:underline;text-underline-offset:4px}.nav-cta{background:#111;color:#fff;border:1.5px solid #111;border-radius:10px;padding:9px 13px;font-size:12px;font-weight:800}
+main{max-width:1120px;margin:auto;padding:55px 20px 70px}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1.5px solid #111;padding:7px 11px;border-radius:999px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1px;background:#fff;box-shadow:2px 2px 0 #111}.dot{width:7px;height:7px;background:#8cc900;border-radius:50%;border:1px solid #111}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;padding:42px 0 35px}.hero h1{font-size:clamp(48px,8vw,92px);line-height:.88;letter-spacing:-.085em;margin:23px 0 22px;font-weight:1000}.hero h1 span{display:block;-webkit-text-stroke:2px #111;color:transparent}.hero p{max-width:500px;color:#444;line-height:1.7;font-size:15px}.hero-card{background:var(--lime);border:2px solid #111;box-shadow:8px 8px 0 #111;border-radius:18px;padding:24px;transform:rotate(1deg);position:relative;overflow:hidden}.card-top{display:flex;justify-content:space-between;font-size:10px;font-weight:950;letter-spacing:1.2px}.orb{height:190px;display:grid;place-items:center;position:relative}.orb:before,.orb:after{content:"";position:absolute;border:2px solid #111;border-radius:50%;width:165px;height:165px}.orb:after{width:125px;height:125px;border-style:dashed}.orb-icon{z-index:1;width:80px;height:80px;border:2px solid #111;background:#fff;border-radius:20px;display:grid;place-items:center;font-size:36px;box-shadow:5px 5px 0 #111;transform:rotate(-8deg)}.hero-card small{font-size:11px;font-weight:850}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:36px 0 18px}.section-head h2{font-size:28px;letter-spacing:-1.5px;margin:0;font-weight:950}.section-head p{margin:0;color:#666;font-size:12px}
+.search-panel{background:#fff;border:2px solid #111;border-radius:18px;padding:22px;box-shadow:6px 6px 0 #111}.tabs{display:flex;gap:8px;margin-bottom:17px;flex-wrap:wrap}.tab{border:1.5px solid #111;background:#fff;padding:9px 13px;border-radius:9px;font-size:12px;font-weight:850;cursor:pointer}.tab.active{background:#111;color:#fff}.field-label{display:block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.8px;margin-bottom:9px}.input-row{display:flex;gap:10px}.input-row input{width:100%;min-width:0;border:1.5px solid #111;border-radius:11px;padding:15px 14px;font:inherit;font-size:14px;outline:none;background:#fafaf7}.input-row input:focus{box-shadow:0 0 0 3px rgba(215,255,69,.9)}.primary{border:1.5px solid #111;background:var(--lime);box-shadow:3px 3px 0 #111;border-radius:11px;padding:0 22px;font-weight:950;cursor:pointer;white-space:nowrap}.primary:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #111}.hint{font-size:11px;color:#666;line-height:1.6;margin:12px 0 0}.status{display:none;margin-top:18px;border:1.5px solid #111;border-radius:12px;padding:14px;background:#f7f7f3;font-size:13px;line-height:1.6;overflow-wrap:anywhere}.status.show{display:block}.status.error{background:#fff0ef}.status.success{background:#f3ffd5}.results{margin-top:18px;display:none}.results.show{display:block}.results pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;line-height:1.6;background:#151515;color:#eaeaea;padding:16px;border-radius:12px;max-height:360px;overflow:auto}.copy-btn{border:1.5px solid #111;border-radius:8px;padding:8px 11px;font-size:11px;font-weight:850;background:white;cursor:pointer}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.feature{border:1.5px solid #111;background:#fff;border-radius:15px;padding:18px;box-shadow:3px 3px 0 #111}.feature .icon{font-size:24px;margin-bottom:22px}.feature h3{margin:0 0 7px;font-size:15px;font-weight:950}.feature p{margin:0;color:#666;font-size:12px;line-height:1.65}.notice{border:1.5px dashed #111;border-radius:12px;padding:13px 15px;margin-top:18px;color:#555;font-size:11px;line-height:1.6}footer{border-top:1.5px solid #111;padding:22px 20px;max-width:1120px;margin:auto;display:flex;justify-content:space-between;gap:15px;color:#666;font-size:11px}footer b{color:#111}
+@media(max-width:760px){.nav-links{display:none}.hero{grid-template-columns:1fr;gap:25px;padding-top:30px}.hero-card{max-width:470px;width:100%;margin:0 auto}.orb{height:150px}.features{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.input-row{flex-direction:column}.primary{padding:14px}.nav-wrap{padding:0 12px}main{padding:35px 16px 50px}.hero h1{font-size:clamp(52px,17vw,82px)}}
+
+/* ZunFinder monochrome neobrutalism slim refresh */
+:root{--paper:#fff;--ink:#000;--line:#000;--muted:#555;--white:#fff;--lime:#000}
+body{background:#fff;color:#000;padding-bottom:100px}
+.nav-wrap{position:fixed;top:auto;bottom:12px;left:0;right:0;z-index:50;padding:0 14px;margin:0;pointer-events:none}
+.nav{pointer-events:auto;max-width:560px;margin:auto;display:flex;align-items:center;justify-content:space-around;gap:4px;padding:8px;border:1.5px solid #000;border-radius:18px;background:rgba(255,255,255,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:4px 4px 0 #000}
+.logo{display:none}.nav-cta{display:none}.nav-links{display:contents}
+.nav-links a,.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:65px;padding:7px 10px;border:1.5px solid transparent;border-radius:10px;font-size:10px;font-weight:850;background:transparent;color:#000}
+.nav-links a::before{content:"";display:none}.nav-links a:hover{text-decoration:none}
+.nav-item svg,.tab svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-item.active{background:#000;color:#fff;border-color:#000}
+.hero h1 span{color:#fff;-webkit-text-stroke:2px #000}.hero-card{background:#fff;border-color:#000;box-shadow:6px 6px 0 #000}.orb-icon{background:#000;color:#fff;box-shadow:4px 4px 0 #000}.orb-icon svg{stroke:#fff}
+.eyebrow,.search-panel,.feature,.notice{border-color:#000}.eyebrow{background:#fff;box-shadow:2px 2px 0 #000}.dot{background:#000;border-color:#000}
+.tab.active{background:#000;color:#fff}.input-row input{background:#fff;color:#000;border-color:#000}.input-row input:focus{box-shadow:0 0 0 2px #000}.primary{background:#000;color:#fff;border-color:#000;box-shadow:3px 3px 0 #000}.primary:active{box-shadow:1px 1px 0 #000}.feature{box-shadow:3px 3px 0 #000}.status.success{background:#000;color:#fff}.results pre{background:#000;color:#fff}
+@media(max-width:760px){.nav-links{display:contents}.nav{gap:1px}.nav-links a{min-width:55px;padding:7px 8px}.nav-links a:nth-child(1)::after{content:"Home"}.nav-links a:nth-child(2)::after{content:"Finder"}.nav-links a:nth-child(3)::after{content:"Fitur"}.nav-links a:nth-child(4)::after{content:"Tentang"}.nav-links a{font-size:10px}.nav-wrap{padding:0 12px}.hero h1 span{color:#fff}}
+
+</style>
+</head>
+<body>
+<div class="nav-wrap"><nav class="nav" aria-label="Navigasi utama">
+<a class="nav-item active" href="#home" data-section="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v11h14V9M9 20v-7h6v7"/></svg><span>Home</span></a>
+<a class="nav-item" href="#finder" data-section="finder"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><span>Finder</span></a>
+<a class="nav-item" href="#features" data-section="features"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Features</span></a>
+<a class="nav-item" href="#about" data-section="about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 4.4 1.6c-1.2 1.1-2 1.3-2 3M12 17.5h.01"/></svg><span>About</span></a>
+</nav></div><div style="display:flex;justify-content:space-between;align-items:center"><small>SCANNING THE EDITING WORLD</small><small>● READY</small></div></div>
+</section>
+<section id="finder">
+<div class="section-head"><div><div class="eyebrow">01 / SEARCH TOOL</div><h2>Find a preset</h2></div><p>PASTE VIDEO URL TO START</p></div>
+<div class="search-panel">
+<div class="tabs"><button class="tab active" id="urlTab" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13.5a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.7 1.7M14 10.5a4 4 0 0 0-5.7 0l-3 3A4 4 0 0 0 11 19.2l1.7-1.7"/></svg> Video URL</button><button class="tab" id="keywordTab" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg> Keyword search</button></div>
+<form id="searchForm">
+<label class="field-label" id="fieldLabel" for="query">Link video TikTok / YouTube</label>
+<div class="input-row"><input id="query" name="query" placeholder="https://vt.tiktok.com/..." autocomplete="url" required><button class="primary" id="submitBtn" type="submit">FIND PRESET ↗</button></div>
+<p class="hint" id="fieldHint">Pastikan link video dapat diakses. Hasil bergantung pada API AMFinder dan ketersediaan data.</p>
+</form>
+<div id="status" class="status" role="status" aria-live="polite"></div>
+<div id="results" class="results"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><b style="font-size:13px">API response</b><button class="copy-btn" id="copyBtn" type="button">COPY JSON</button></div><pre id="output"></pre></div>
+<div class="notice"><b>Info API:</b> Endpoint yang diberikan adalah <code>https://amfinder.web.id/api/find</code>. Website ini mencoba mengirim permintaan dari browser. Jika API mewajibkan security token atau memblokir CORS, hasil akan menampilkan error—gunakan token resmi atau backend yang diizinkan; jangan menaruh token rahasia di HTML publik.</div>
+</div>
+</section>
+<section id="features">
+<div class="section-head"><div><div class="eyebrow">02 / WHAT YOU GET</div><h2>Made for preset hunters</h2></div><p>MINIMAL LOOK. USEFUL TOOLS.</p></div>
+<div class="features">
+<article class="feature"><div class="icon">↗</div><h3>URL Finder</h3><p>Masukkan tautan video untuk meminta pencarian preset lewat endpoint API.</p></article>
+<article class="feature"><div class="icon">⌕</div><h3>Keyword Mode</h3><p>Mode kata kunci disediakan sebagai antarmuka. Endpoint search perlu dikonfigurasi setelah parameter resminya diketahui.</p></article>
+<article class="feature"><div class="icon">▣</div><h3>Copy Response</h3><p>Salin respons JSON API agar mudah dibaca, disimpan, atau diperiksa saat debugging.</p></article>
+</div>
+</section>
+<section id="about"><div class="section-head"><div><div class="eyebrow">03 / ABOUT</div><h2>Small tool. Big edits.</h2></div></div><p style="max-width:650px;color:#555;font-size:13px;line-height:1.8">ZunFinder adalah antarmuka pencarian preset dengan gaya neobrutalism minimal: hitam-putih, garis tegas, aksen lime, dan navbar glass. ZunFinder bukan layanan resmi AMFinder.</p></section>
+</main>
+<footer><span>© 2026 <b>ZunFinder</b> — Preset Finder</span><span>BUILT FOR EDITORS · BLACK / WHITE / LIME</span></footer>
+<script>
+const API_FIND = "https://amfinder.web.id/api/find";
+let mode = "url";
+const query = document.getElementById("query");
+const statusBox = document.getElementById("status");
+const results = document.getElementById("results");
+const output = document.getElementById("output");
+const submitBtn = document.getElementById("submitBtn");
+const urlTab = document.getElementById("urlTab");
+const keywordTab = document.getElementById("keywordTab");
+function setMode(next) {
+  mode = next;
+  urlTab.classList.toggle("active", mode === "url");
+  keywordTab.classList.toggle("active", mode === "keyword");
+  document.getElementById("fieldLabel").textContent = mode === "url" ? "Link video TikTok / YouTube" : "Kata kunci preset";
+  query.placeholder = mode === "url" ? "https://vt.tiktok.com/..." : "contoh: jedag jedug alight motion";
+  query.type = "text";
+  document.getElementById("fieldHint").textContent = mode === "url"
+    ? "Endpoint /api/find digunakan untuk pencarian berdasarkan URL video."
+    : "Mode keyword belum terhubung: URL endpoint /api/search dan parameter resminya perlu dikonfirmasi.";
+  submitBtn.textContent = mode === "url" ? "FIND PRESET ↗" : "KEYWORD BELUM AKTIF";
+}
+urlTab.addEventListener("click", () => setMode("url"));
+keywordTab.addEventListener("click", () => setMode("keyword"));
+function showStatus(message, kind) {
+  statusBox.className = "status show " + (kind || "");
+  statusBox.textContent = message;
+}
+document.getElementById("searchForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const value = query.value.trim();
+  if (!value) return;
+  if (mode === "keyword") {
+    showStatus("Mode keyword belum dijalankan karena endpoint /api/search dan format parameternya belum dikonfirmasi. Gunakan Video URL dulu.", "error");
+    return;
+  }
+  try {
+    const parsed = new URL(value);
+    if (!["http:", "https:"].includes(parsed.protocol)) throw new Error("protocol");
+  } catch {
+    showStatus("Masukkan URL video yang valid, dimulai dengan https:// atau http://.", "error");
+    return;
+  }
+  submitBtn.disabled = true;
+  submitBtn.textContent = "SEARCHING…";
+  statusBox.className = "status";
+  results.className = "results";
+  try {
+    // Query parameter follows the endpoint shape previously tested. API may require a security token.
+    const requestUrl = new URL(API_FIND);
+    requestUrl.searchParams.set("url", value);
+    const response = await fetch(requestUrl.toString(), { method: "GET", headers: { "Accept": "application/json" } });
+    const raw = await response.text();
+    let data;
+    try { data = JSON.parse(raw); } catch { data = { raw }; }
+    output.textContent = JSON.stringify(data, null, 2);
+    results.className = "results show";
+    if (!response.ok) {
+      showStatus("API mengembalikan HTTP " + response.status + ". " + (data.error || "Permintaan tidak berhasil.") + " Jika muncul 'security token required', API membutuhkan token resmi.", "error");
+    } else {
+      showStatus("Respons diterima dari API (HTTP " + response.status + "). Periksa data di bawah.", "success");
+    }
+  } catch (error) {
+    showStatus("Tidak dapat menghubungi API dari browser. Kemungkinan CORS, jaringan, atau API tidak mengizinkan request langsung. Untuk produksi, hubungkan melalui backend yang sah.", "error");
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "FIND PRESET ↗";
+  }
+});
+document.getElementById("copyBtn").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(output.textContent);
+    document.getElementById("copyBtn").textContent = "COPIED ✓";
+    setTimeout(() => document.getElementById("copyBtn").textContent = "COPY JSON", 1400);
+  } catch {
+    showStatus("Clipboard tidak tersedia. Pilih teks JSON lalu salin secara manual.", "error");
+  }
+});
+
+const navLinks=[...document.querySelectorAll('.nav-item')];
+const navSections=[...document.querySelectorAll('#home,#finder,#features,#about')];
+if('IntersectionObserver' in window){const navObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)navLinks.forEach(a=>a.classList.toggle('active',a.dataset.section===entry.target.id));});},{rootMargin:'-35% 0px -50% 0px'});navSections.forEach(section=>navObserver.observe(section));}
+
+</script>
+</body>
+</html>

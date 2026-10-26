@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NEXFIND – Cari link preset Alight Motion dari TikTok</title>
+<meta name="theme-color" content="#0f1530">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1530; --bg2:#171f45; --card:#1a2350; --line:#2d3978;
+  --text:#eaf0ff; --muted:#9aa6d6; --accent:#8b97ff; --mint:#5cf2c0; --warn:#ffb86b; --err:#ff7a8a;
+  --head:'Bricolage Grotesque','Trebuchet MS',sans-serif; --body:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font:400 16px/1.55 var(--body);min-height:100vh;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  background-image:radial-gradient(900px 500px at 50% -10%,#26327a55,transparent 70%)}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:28px 18px 60px}
+header{display:flex;align-items:center;gap:10px;margin-bottom:34px}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--mint));display:grid;place-items:center;color:#0f1530;font:800 18px var(--head)}
+.brand{font:800 22px var(--head);letter-spacing:.5px}
+h1{font:800 clamp(30px,7vw,46px)/1.08 var(--head);letter-spacing:-.5px;margin-bottom:12px}
+.sub{color:var(--muted);max-width:52ch;margin-bottom:24px}
+form{position:relative;background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:10px;display:flex;gap:8px;flex-wrap:wrap;overflow:hidden}
+form.busy::after{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--mint),transparent);animation:scan 1.1s linear infinite}
+@keyframes scan{0%{transform:translateY(0)}100%{transform:translateY(72px)}}
+input{flex:1 1 220px;min-width:0;background:transparent;border:0;outline:0;color:var(--text);font:500 16px var(--body);padding:12px 10px}
+input::placeholder{color:#6d7ab0}
+button,.btn{font:700 15px var(--body);border:0;border-radius:12px;padding:12px 18px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.go{background:var(--accent);color:#0f1530}
+.go:disabled{opacity:.6;cursor:wait}
+.ghost{background:#222d63;color:var(--text)}
+:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.hist{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hist button{background:transparent;border:1px solid var(--line);color:var(--muted);padding:6px 12px;font-size:13px;border-radius:99px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#status{margin-top:22px;color:var(--muted);min-height:24px}
+#status.err{color:var(--err)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:20px}
+.vid{display:grid;grid-template-columns:130px 1fr;gap:16px}
+.thumb{position:relative;aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:#0c1130}
+.thumb img,.thumb video,.thumb iframe{width:100%;height:100%;object-fit:cover;border:0;display:block}
+.play{position:absolute;inset:0;display:grid;place-items:center;background:#0f153044;border-radius:0;color:#fff;font-size:30px}
+.who{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.who img{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#0c1130}
+.who b{display:block;line-height:1.2}
+.who span{color:var(--muted);font-size:14px}
+.desc{color:#cdd6ff;font-size:14px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:10px;word-break:break-word}
+.stats{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.stats b{color:var(--text)}
+h2{font:800 20px var(--head);margin:28px 0 4px}
+.note{color:var(--muted);font-size:14px}
+.preset{display:grid;grid-template-columns:72px 1fr;gap:14px;margin-top:12px}
+.pimg{width:72px;height:72px;border-radius:12px;background:#0c1130;object-fit:cover;display:grid;place-items:center;color:var(--accent);font:800 13px var(--head);text-align:center}
+.ptitle{font-weight:700;word-break:break-word;margin-bottom:6px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tag{font-size:12px;padding:3px 9px;border-radius:99px;background:#222d63;color:var(--muted)}
+.tag.t5{background:#5cf2c022;color:var(--mint)}
+.tag.tx{background:#8b97ff22;color:var(--accent)}
+.tag.own{background:#ffb86b22;color:var(--warn)}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.acts .btn,.acts button{padding:9px 14px;font-size:14px}
+.empty{padding:6px 2px}
+.empty p{margin-top:6px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:var(--mint);color:#0f1530;font-weight:700;padding:10px 18px;border-radius:99px;opacity:0;transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+footer{margin-top:44px;color:#6d7ab0;font-size:13px}
+@media(max-width:520px){.vid{grid-template-columns:104px 1fr;gap:12px}.preset{grid-template-columns:58px 1fr}.pimg{width:58px;height:58px}}
+@media(prefers-reduced-motion:reduce){form.busy::after{animation:none}.toast{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><div class="logo">N</div><div class="brand">NEXFIND</div></header>
+
+  <h1>Tempel link TikTok, kami carikan link presetnya.</h1>
+  <p class="sub">NEXFIND memeriksa deskripsi, bio, link di bio, dan komentar video untuk menemukan link preset Alight Motion (5MB) dan file XML.</p>
+
+  <form id="f" autocomplete="off">
+    <input id="u" type="text" inputmode="url" placeholder="https://www.tiktok.com/@user/video/…" aria-label="Link video TikTok" required>
+    <button type="button" class="ghost" id="paste">Tempel</button>
+    <button type="submit" class="go" id="go">Cari preset</button>
+  </form>
+  <div class="hist" id="hist"></div>
+  <div id="status" role="status" aria-live="polite"></div>
+  <div id="out"></div>
+
+  <footer>NEXFIND hanya menampilkan link yang dipublikasikan pembuat video. Pastikan kamu menghargai kreator aslinya.</footer>
+</div>
+<div class="toast" id="toast">Link disalin</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const f = $('#f'), u = $('#u'), go = $('#go'), st = $('#status'), out = $('#out'), hist = $('#hist');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = n => n == null ? '–' : n >= 1e6 ? (n/1e6).toFixed(1)+' jt' : n >= 1e3 ? (n/1e3).toFixed(1)+' rb' : String(n);
+const SRC = {description:'Deskripsi video', bio:'Bio profil', bioLink:'Link di bio', comment:'Komentar'};
+
+/* riwayat pencarian (localStorage bisa kosong/diblokir) */
+const getH = () => { try { return JSON.parse(localStorage.getItem('nexfind_h') || '[]') } catch { return [] } };
+const setH = a => { try { localStorage.setItem('nexfind_h', JSON.stringify(a.slice(0, 5))) } catch {} };
+function drawH(){
+  hist.innerHTML = getH().map(x => `<button type="button" data-u="${esc(x)}">${esc(x.replace(/^https?:\/\/(www\.)?/, ''))}</button>`).join('');
+}
+hist.onclick = e => { const b = e.target.closest('button'); if (b) { u.value = b.dataset.u; f.requestSubmit() } };
+drawH();
+
+$('#paste').onclick = async () => {
+  try { u.value = (await navigator.clipboard.readText()).trim(); u.focus() }
+  catch { u.focus(); status('Izin tempel ditolak. Tempel manual di kolom ya.', true) }
+};
+
+function status(t, err){ st.textContent = t; st.className = err ? 'err' : '' }
+function toast(t){ const e = $('#toast'); e.textContent = t; e.classList.add('on'); setTimeout(() => e.classList.remove('on'), 1600) }
+async function copy(t){
+  try { await navigator.clipboard.writeText(t) }
+  catch { const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); document.execCommand('copy'); a.remove() }
+  toast('Link disalin');
+}
+
+const steps = ['Membuka video…','Membaca deskripsi dan bio…','Memindai komentar…','Memeriksa link di bio…','Mengambil info preset…'];
+let timer;
+f.onsubmit = async e => {
+  e.preventDefault();
+  const v = u.value.trim(); if (!v) return;
+  out.innerHTML = ''; go.disabled = true; f.classList.add('busy');
+  let i = 0; status(steps[0]); timer = setInterval(() => status(steps[Math.min(++i, steps.length-1)]), 2500);
+  try {
+    const r = await fetch('/api/find?url=' + encodeURIComponent(v));
+    const j = await r.json().catch(() => ({ok:false, error:'Respons server tidak terbaca'}));
+    if (!r.ok || !j.ok) throw new Error(j.error || 'Ada yang error, coba lagi ya');
+    setH([v, ...getH().filter(x => x !== v)]); drawH();
+    status(`Selesai. ${j.scanned.comments} komentar dan ${j.scanned.replies} balasan diperiksa.`);
+    render(j);
+  } catch (err) { status(err.message, true) }
+  finally { clearInterval(timer); go.disabled = false; f.classList.remove('busy') }
+};
+
+function render(j){
+  const v = j.video, a = j.author;
+  const ps = j.presets || [];
+  out.innerHTML = `
+  <div class="panel vid">
+    <div class="thumb" id="vbox">
+      ${v.cover ? `<img src="${esc(v.cover)}" alt="Sampul video" referrerpolicy="no-referrer">` : ''}
+      <button class="play" id="vplay" aria-label="Putar video">▶</button>
+    </div>
+    <div>
+      <div class="who">
+        ${a.avatar ? `<img src="${esc(a.avatar)}" alt="" referrerpolicy="no-referrer">` : ''}
+        <div><b>${esc(a.nickname || a.uniqueId)}</b><span>@${esc(a.uniqueId)}</span></div>
+      </div>
+      <p class="desc">${esc(v.description) || 'Tanpa deskripsi'}</p>
+      <div class="stats"><span><b>${num(v.views)}</b> tayangan</span><span><b>${num(v.likes)}</b> suka</span><span><b>${num(v.comments)}</b> komentar</span><span><b>${num(v.shares)}</b> dibagikan</span></div>
+      <div class="acts" style="margin-top:12px"><a class="btn ghost" href="${esc(v.url)}" target="_blank" rel="noopener">Buka di TikTok</a></div>
+    </div>
+  </div>
+  <h2>${ps.length ? ps.length + ' preset ditemukan' : 'Belum ada preset'}</h2>
+  ${ps.length ? '<p class="note">Diurutkan dari yang paling dipercaya: deskripsi dan bio dulu, lalu komentar pembuat dan komentar yang dipin.</p>' : `
+  <div class="panel empty"><b>Video ini tidak menyertakan link preset yang bisa dibaca.</b><p class="note">Coba video lain dari kreator yang sama, atau cek komentar langsung di TikTok. Link yang baru dikirim kadang belum terbaca.</p></div>`}
+  ${ps.map(p => {
+    const is5 = p.type === '5mb';
+    const title = p.title || (is5 ? 'Preset Alight Motion' : 'File preset');
+    const src = (SRC[p.source] || 'Sumber lain') + (p.detail && p.source === 'comment' ? ' ' + p.detail : '');
+    return `<div class="panel preset">
+      ${p.thumb ? `<img class="pimg" src="${esc(p.thumb)}" alt="" referrerpolicy="no-referrer">` : `<div class="pimg">${is5 ? '5MB' : 'XML'}</div>`}
+      <div>
+        <div class="ptitle">${esc(title)}</div>
+        <div class="tags">
+          <span class="tag ${is5 ? 't5' : 'tx'}">${is5 ? 'Link 5MB' : 'File XML'}</span>
+          ${p.size ? `<span class="tag">${esc(p.size)}</span>` : ''}
+          <span class="tag">${esc(src)}</span>
+          ${p.byAuthor ? '<span class="tag own">Dari pembuat video</span>' : ''}
+          ${p.pinned ? '<span class="tag own">Dipin</span>' : ''}
+        </div>
+        <div class="acts">
+          <a class="btn go" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">${is5 ? 'Buka preset' : 'Unduh file'}</a>
+          <button class="ghost" data-copy="${esc(p.url)}">Salin link</button>
+        </div>
+      </div>
+    </div>`}).join('')}`;
+
+  out.querySelectorAll('[data-copy]').forEach(b => b.onclick = () => copy(b.dataset.copy));
+  $('#vplay').onclick = () => playVideo(v);
+}
+
+/* putar: link langsung dulu, lalu proxy, terakhir embed TikTok */
+function playVideo(v){
+  const box = $('#vbox');
+  const embed = () => { box.innerHTML = `<iframe src="${esc(v.embed)}" allow="autoplay; fullscreen" allowfullscreen></iframe>` };
+  const mk = (src, onFail) => {
+    const el = document.createElement('video');
+    el.controls = true; el.autoplay = true; el.playsInline = true; el.setAttribute('playsinline','');
+    el.onerror = onFail; el.src = src;
+    box.innerHTML = ''; box.appendChild(el);
+  };
+  if (v.src) mk(v.src, () => v.proxy ? mk(v.proxy, embed) : embed());
+  else if (v.proxy) mk(v.proxy, embed);
+  else embed();
+}
+</script>
+</body>
+</html>
